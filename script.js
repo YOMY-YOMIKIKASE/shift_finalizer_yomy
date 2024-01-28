@@ -21,15 +21,22 @@ function updateQuestions(questions) {
             cell1.textContent = question;
 
             var cell2 = row.insertCell(1);
-            var select = document.createElement('select');
-            // 選択肢を追加
-            ['yukko', 'yuririn', 'cory', 'zen', 'nazyu'].forEach(optionValue => {
-                var option = document.createElement('option');
-                option.value = optionValue;
-                option.textContent = optionValue;
-                select.appendChild(option);
+            var options = ['nazyu', 'yuririn', 'yukko', 'zen','cory'];
+            options.forEach((optionValue, optionIndex) => {
+                var radioInput = document.createElement('input');
+                radioInput.type = 'radio';
+                radioInput.name = 'question' + index;
+                radioInput.value = optionValue;
+                radioInput.id = 'question' + index + 'option' + optionIndex;
+                radioInput.dataset.questionText = question; // 質問文をデータ属性として追加
+
+                var label = document.createElement('label');
+                label.htmlFor = radioInput.id;
+                label.textContent = optionValue;
+
+                cell2.appendChild(radioInput);
+                cell2.appendChild(label);
             });
-            cell2.appendChild(select);
         }
     });
 }
@@ -38,13 +45,43 @@ function submitSurvey() {
     var form = document.getElementById('surveyForm');
     var results = document.getElementById('results');
     var output = '';
+    var allAnswered = true;
 
     for (var i = 0; i < form.elements.length; i++) {
         var element = form.elements[i];
-        if (element.tagName === 'SELECT') {
-            output += element.parentNode.previousSibling.textContent + ', ' + element.value + '<br>';
+        if (element.type === 'radio') {
+            var name = element.name;
+            if (!form.elements[name].value) {
+                allAnswered = false;
+                break;
+            }
+        }
+    }
+
+    if (!allAnswered) {
+        alert('すべての質問に回答してください。');
+        return;
+    }
+
+    for (var i = 0; i < form.elements.length; i++) {
+        var element = form.elements[i];
+        if (element.type === 'radio' && element.checked) {
+            output += element.dataset.questionText + ',' + element.value + '<br>';
         }
     }
 
     results.innerHTML = output;
+}
+
+// ラジオボタンの最初の要素にのみrequired属性を設定
+function addRequiredToFirstRadioButton() {
+    var allRadioButtons = document.querySelectorAll('input[type=radio]');
+    var handledNames = {};
+
+    allRadioButtons.forEach(function(radio) {
+        if (!handledNames[radio.name]) {
+            radio.required = true;
+            handledNames[radio.name] = true;
+        }
+    });
 }
