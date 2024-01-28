@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アンケートサイト</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>アンケート</h2>
+        <div>
+            <label for="questionsSelect">調整する月を選んでください:</label>
+            <select id="questionsSelect" onchange="loadQuestions()">
+                <option value="">月を選んでね</option>
+                <option value="1.txt">1月</option>
+                <option value="2.txt">2月</option>
+                <option value="3.txt">3月</option>
+                <option value="4.txt">4月</option>
+                <option value="5.txt">5月</option>
+                <option value="6.txt">6月</option>
+                <option value="7.txt">7月</option>
+                <option value="8.txt">8月</option>
+                <option value="9.txt">9月</option>
+                <option value="10.txt">10月</option>
+                <option value="11.txt">11月</option>
+                <option value="12.txt">12月</option>
+
+            </select>
+        </div>
+        <form id="surveyForm">
+            <table id="questionsTable">
+                <!-- 質問はここに動的に追加される -->
+            </table>
+            <button type="button" onclick="submitSurvey()">確定！</button>
+        </form>
+        <div id="results"></div>
+    </div>
+</body>
+</html>
