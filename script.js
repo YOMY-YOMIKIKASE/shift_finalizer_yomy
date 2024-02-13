@@ -77,7 +77,7 @@ function submitSurvey() {
     }
 
     // 結果の表示
-    results.innerHTML = '<h3>質問順に回答:</h3>' + outputByQuestion + '<h3>選択肢ごとの質問:</h3>' + outputByAnswerFormatted;
+    results.innerHTML = '<h3>日付順一覧:</h3>' + outputByQuestion + '<h3>担当ごとの一覧:</h3>' + outputByAnswerFormatted;
 }
 
 // ラジオボタンの最初の要素にのみrequired属性を設定
