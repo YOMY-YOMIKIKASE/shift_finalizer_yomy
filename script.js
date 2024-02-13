@@ -44,33 +44,40 @@ function updateQuestions(questions) {
 function submitSurvey() {
     var form = document.getElementById('surveyForm');
     var results = document.getElementById('results');
-    var output = '';
+    var outputByQuestion = '';
+    var outputByAnswer = {};
     var allAnswered = true;
 
-    for (var i = 0; i < form.elements.length; i++) {
-        var element = form.elements[i];
-        if (element.type === 'radio') {
-            var name = element.name;
-            if (!form.elements[name].value) {
-                allAnswered = false;
-                break;
-            }
-        }
-    }
-
-    if (!allAnswered) {
-        alert('すべての質問に回答してください。');
-        return;
-    }
-
+    // 全てのラジオボタンを確認し、回答を集計
     for (var i = 0; i < form.elements.length; i++) {
         var element = form.elements[i];
         if (element.type === 'radio' && element.checked) {
-            output += element.dataset.questionText + ',' + element.value + '<br>';
+            var questionText = element.dataset.questionText;
+            var answerValue = element.value;
+
+            // 質問順に出力
+            outputByQuestion += questionText + ', ' + answerValue + '<br>';
+
+            // 回答ごとに質問を集計
+            if (!outputByAnswer[answerValue]) {
+                outputByAnswer[answerValue] = [];
+            }
+            outputByAnswer[answerValue].push(questionText);
         }
     }
 
-    results.innerHTML = output;
+    // 回答ごとの出力を準備
+    var outputByAnswerFormatted = '';
+    for (var answer in outputByAnswer) {
+        outputByAnswerFormatted += '<strong>' + answer + ':</strong><br>';
+        outputByAnswer[answer].forEach(function(question) {
+            outputByAnswerFormatted += '- ' + question + '<br>';
+        });
+        outputByAnswerFormatted += '<br>';
+    }
+
+    // 結果の表示
+    results.innerHTML = '<h3>質問順に回答:</h3>' + outputByQuestion + '<h3>選択肢ごとの質問:</h3>' + outputByAnswerFormatted;
 }
 
 // ラジオボタンの最初の要素にのみrequired属性を設定
