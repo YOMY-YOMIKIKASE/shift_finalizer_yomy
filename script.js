@@ -14,6 +14,8 @@ function updateQuestions(questions) {
     var table = document.getElementById('questionsTable');
     table.innerHTML = '';
 
+    
+
     questions.forEach((question, index) => {
         if (question.trim() !== '') {
             var row = table.insertRow();
@@ -24,7 +26,7 @@ function updateQuestions(questions) {
             var options = ['nazyu', 'yuririn', 'yukko', 'zen','cory', 'sunny','bits', 'riana', 'maayu', 'kurin'];
             options.forEach((optionValue, optionIndex) => {
                 var radioInput = document.createElement('input');
-                radioInput.type = 'radio';
+                radioInput.type = 'radio'; 
                 radioInput.name = 'question' + index;
                 radioInput.value = optionValue;
                 radioInput.id = 'question' + index + 'option' + optionIndex;
