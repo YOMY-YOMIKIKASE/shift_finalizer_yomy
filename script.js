@@ -2,19 +2,26 @@ function loadQuestions() {
     var questionsFile = document.getElementById('questionsSelect').value;
     if (questionsFile) {
         fetch(questionsFile)
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                return response.text();
+            })
             .then(data => {
                 var questions = data.split('\n');
                 updateQuestions(questions);
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
             });
     }
 }
 
+
 function updateQuestions(questions) {
     var table = document.getElementById('questionsTable');
     table.innerHTML = '';
-
-    
 
     questions.forEach((question, index) => {
         if (question.trim() !== '') {
