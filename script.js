@@ -30,7 +30,7 @@ function updateQuestions(questions) {
             cell1.textContent = question;
 
             var cell2 = row.insertCell(1);
-            var options = ['nazyu', 'yuririn', 'yukko', 'zen','cory', 'sunny','bits', 'riana', 'maayu', 'kurin'];
+            var options = ['nazyu','yukko','cory','sunny','bits','maayu','ma-chan'];
             options.forEach((optionValue, optionIndex) => {
                 var radioInput = document.createElement('input');
                 radioInput.type = 'radio'; 
